@@ -134,7 +134,13 @@ class Processor extends AbstractProcessor<void> {
           !_flavorizr.macosFlavorsAvailable && instruction.startsWith('macos'))
       ..removeWhere((instruction) =>
           !_flavorizr.dummyAssets &&
-          instruction.toLowerCase().contains('assets'));
+          instruction.toLowerCase().contains('assets'))
+      ..removeWhere((instruction) =>
+          !_flavorizr.dummyAssets && instruction == 'flutter:app')
+      ..removeWhere((instruction) =>
+          !_flavorizr.dummyAssets && instruction == 'flutter:pages')
+      ..removeWhere((instruction) =>
+          !_flavorizr.dummyAssets && instruction == 'flutter:main');
 
     for (String instruction in instructions) {
       stdout.writeln('Executing task $instruction');
