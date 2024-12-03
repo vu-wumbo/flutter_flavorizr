@@ -65,12 +65,14 @@ class FlutterFlavorsProcessor extends StringProcessor {
     buffer.writeln('    switch (appFlavor) {');
 
     config.flavors.forEach((String name, Flavor flavor) {
-      buffer.writeln('      case Flavor.${name.toLowerCase()}:');
+      if (config.flavors.entries.last.key != name) {
+        buffer.writeln('      case Flavor.${name.toLowerCase()}:');
+      } else {
+        buffer.writeln('      default:');
+      }
       buffer.writeln('        return \'${flavor.app.name}\';');
     });
 
-    buffer.writeln('      default:');
-    buffer.writeln('        return \'title\';');
     buffer.writeln('    }');
     buffer.writeln('  }');
 
