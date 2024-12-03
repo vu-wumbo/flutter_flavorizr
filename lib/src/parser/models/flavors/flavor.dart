@@ -37,6 +37,9 @@ class Flavor {
   final App app;
 
   @JsonKey(required: false, disallowNullValue: true)
+  final Map<String, String>? configs;
+
+  @JsonKey(required: false, disallowNullValue: true)
   final Android? android;
 
   @JsonKey(required: false, disallowNullValue: true)
@@ -47,6 +50,7 @@ class Flavor {
 
   const Flavor({
     required this.app,
+    this.configs,
     this.android,
     this.ios,
     this.macos,

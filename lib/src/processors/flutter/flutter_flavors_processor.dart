@@ -61,20 +61,46 @@ class FlutterFlavorsProcessor extends StringProcessor {
     buffer.writeln('  static String get name => appFlavor?.name ?? \'\';');
     buffer.writeln();
 
+    final flavorKeys = config.flavors.keys;
+
+    /// Append app's title
     buffer.writeln('  static String get title {');
     buffer.writeln('    switch (appFlavor) {');
-
     config.flavors.forEach((String name, Flavor flavor) {
-      if (config.flavors.entries.last.key != name) {
+      if (flavorKeys.last != name) {
         buffer.writeln('      case Flavor.${name.toLowerCase()}:');
       } else {
         buffer.writeln('      default:');
       }
       buffer.writeln('        return \'${flavor.app.name}\';');
     });
-
     buffer.writeln('    }');
     buffer.writeln('  }');
+
+    /// Append custom configs
+    config.flavors.values.first.configs?.forEach((String cKey, String value) {
+      // key = domain, value = rest.wumbo.io
+      var isValid = true;
+      for (var fKey in flavorKeys) {
+        isValid =
+            isValid && config.flavors[fKey]?.configs?[cKey]?.isNotEmpty == true;
+      }
+
+      if (isValid) {
+        buffer.writeln('  static String get ${cKey.toLowerCase()} {');
+        buffer.writeln('    switch (appFlavor) {');
+        for (var fKey in flavorKeys) {
+          if (flavorKeys.last != fKey) {
+            buffer.writeln('      case Flavor.${fKey.toLowerCase()}:');
+          } else {
+            buffer.writeln('      default:');
+          }
+          buffer.writeln('        return \'$value\';');
+        }
+        buffer.writeln('    }');
+        buffer.writeln('  }');
+      }
+    });
 
     buffer.writeln();
     buffer.writeln('}');
