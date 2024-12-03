@@ -48,6 +48,9 @@ class Flavorizr {
           'https://github.com/AngeloAvv/flutter_flavorizr/releases/download/v2.2.3/assets.zip')
   final String assetsUrl;
 
+  @JsonKey(defaultValue: true)
+  final bool sampleAssets;
+
   @JsonKey()
   final IDE? ide;
 
@@ -77,6 +80,7 @@ class Flavorizr {
     required this.flavors,
     this.instructions,
     required this.assetsUrl,
+    required this.sampleAssets,
     this.ide,
   })  : androidFlavors = flavors.where((_, flavor) => flavor.android != null),
         iosFlavors = flavors.where((_, flavor) => flavor.ios != null),
@@ -90,9 +94,7 @@ class Flavorizr {
         macosFirebaseFlavors =
             flavors.where((_, flavor) => flavor.macos?.firebase != null);
 
-
-  factory Flavorizr.fromJson(Map json) =>
-      _$FlavorizrFromJson(json);
+  factory Flavorizr.fromJson(Map json) => _$FlavorizrFromJson(json);
 
   factory Flavorizr.parse(String yaml) =>
       checkedYamlDecode(yaml, (o) => Flavorizr.fromJson(o ?? {}));
