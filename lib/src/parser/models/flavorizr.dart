@@ -49,7 +49,7 @@ class Flavorizr {
   final String assetsUrl;
 
   @JsonKey(defaultValue: true)
-  final bool sampleAssets;
+  final bool dummyAssets;
 
   @JsonKey()
   final IDE? ide;
@@ -80,7 +80,7 @@ class Flavorizr {
     required this.flavors,
     this.instructions,
     required this.assetsUrl,
-    required this.sampleAssets,
+    required this.dummyAssets,
     this.ide,
   })  : androidFlavors = flavors.where((_, flavor) => flavor.android != null),
         iosFlavors = flavors.where((_, flavor) => flavor.ios != null),

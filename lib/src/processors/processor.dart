@@ -133,7 +133,8 @@ class Processor extends AbstractProcessor<void> {
       ..removeWhere((instruction) =>
           !_flavorizr.macosFlavorsAvailable && instruction.startsWith('macos'))
       ..removeWhere((instruction) =>
-          !_flavorizr.sampleAssets && instruction.startsWith('assets'));
+          !_flavorizr.dummyAssets &&
+          instruction.toLowerCase().contains('assets'));
 
     for (String instruction in instructions) {
       stdout.writeln('Executing task $instruction');
