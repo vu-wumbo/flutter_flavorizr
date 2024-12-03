@@ -79,7 +79,6 @@ class FlutterFlavorsProcessor extends StringProcessor {
 
     /// Append custom configs
     config.flavors.values.first.configs?.forEach((String cKey, String value) {
-      // key = domain, value = rest.wumbo.io
       var isValid = true;
       for (var fKey in flavorKeys) {
         isValid =
@@ -87,6 +86,7 @@ class FlutterFlavorsProcessor extends StringProcessor {
       }
 
       if (isValid) {
+        buffer.writeln();
         buffer.writeln('  static String get ${cKey.toLowerCase()} {');
         buffer.writeln('    switch (appFlavor) {');
         for (var fKey in flavorKeys) {
@@ -95,7 +95,8 @@ class FlutterFlavorsProcessor extends StringProcessor {
           } else {
             buffer.writeln('      default:');
           }
-          buffer.writeln('        return \'$value\';');
+          buffer.writeln(
+              '        return \'${config.flavors[fKey]?.configs?[cKey]}\';');
         }
         buffer.writeln('    }');
         buffer.writeln('  }');
