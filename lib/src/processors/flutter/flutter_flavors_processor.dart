@@ -87,7 +87,7 @@ class FlutterFlavorsProcessor extends StringProcessor {
 
       if (isValid) {
         buffer.writeln();
-        buffer.writeln('  static String get ${cKey.toLowerCase()} {');
+        buffer.writeln('  static String get $cKey {');
         buffer.writeln('    switch (appFlavor) {');
         for (var fKey in flavorKeys) {
           if (flavorKeys.last != fKey) {
